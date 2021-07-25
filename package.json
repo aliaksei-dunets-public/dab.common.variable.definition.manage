@@ -35,5 +35,9 @@
             "@sap/ux-ui5-tooling",
             "@sap/ux-ui5-fe-mockserver-middleware"
         ]
+    },
+    "dependencies": {
+        "@sap/generator-fiori-elements": "^1.1.9",
+        "xml-js": "^1.6.11"
     }
 }
