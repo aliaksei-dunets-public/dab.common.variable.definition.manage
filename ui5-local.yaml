@@ -1,0 +1,36 @@
+specVersion: '2.0'
+metadata:
+  name: 'common.variable.definition.manage'
+type: application
+framework:
+  name: SAPUI5
+  version: '1.92.2'
+  libraries: 
+    - name: sap.m
+    - name: sap.ushell
+    - name: sap.fe.templates
+    - name: themelib_sap_fiori_3
+server:
+  customMiddleware:
+  - name: fiori-tools-proxy
+    afterMiddleware: compression
+    configuration:
+      ignoreCertError: false # If set to true, certificate errors will be ignored. E.g. self-signed certificates will be accepted
+      backend:
+      - path: /sap
+        url: https://345236af-6b20-4c65-acb4-b6e2015c2d59.abap.eu10.hana.ondemand.com
+        scp: true
+  - name: sap-fe-mockserver
+    beforeMiddleware: fiori-tools-proxy
+    configuration:
+      service:
+        urlBasePath: /sap/opu/odata4/sap/zdab_global_config_ui_v4/srvd/sap/zdab_global_configuration_sd/0001
+        name: ''
+        metadataXmlPath: ./webapp/localService/metadata.xml
+        mockdataRootPath: ./webapp/localService/mockdata
+        generateMockData: true
+  - name: fiori-tools-appreload
+    afterMiddleware: compression
+    configuration:
+     port: 35729
+     path: webapp
